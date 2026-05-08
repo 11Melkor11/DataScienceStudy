@@ -1,12 +1,22 @@
+import numpy as np
 import pandas as pd
+
+pd.set_option("display.max_columns", 100)
+pd.set_option("display.max_rows", 100)
+
 
 dt = pd.read_csv("tips.csv")
 
 ### Что делаем при получении файла
+# print(type(dt))
 # print(dt.head())
 # print(dt.shape)
 # print(dt.info())
 # print(dt.describe())
+
+# For bool means
+# print(dt['time'].value_counts())
+# print(dt['smoker'].value_counts(normalize=True))
 
 ###Loc and Iloc
 
@@ -30,6 +40,10 @@ dt = pd.read_csv("tips.csv")
 # who_pay_more_man = dt[(dt['smoker'] == "Yes") & (dt['sex'] == 'Male')]['total_bill'].mean()
 # print('smoke_man:\n', who_pay_more_man)
 
+# Функция к каждому столбцу
+# print(dt.apply(np.max))
+# print(dt.apply(np.min))
+
 # print(help(dt.head()))
 
 ### можно группировать так
@@ -43,16 +57,24 @@ dt = pd.read_csv("tips.csv")
 ### но лучше так
 # group = dt.groupby("size")[['total_bill', 'tip']].mean()
 # print(group)
+#
+# agr_group = dt.groupby("size")[['total_bill', 'tip']].agg(np.median)
+# print(agr_group)
 
 ### crosstab
 # cross_data = pd.crosstab(dt['sex'], dt['smoker'])
 # print(cross_data)
 
-dt['tip_out_of_bill'] = (dt['tip'] / dt['total_bill']) * 100
+# dt['tip_out_of_bill'] = (dt['tip'] / dt['total_bill']) * 100
+# #
+# d = {'Yes': 1, 'No': 0}
+# dt['smoker'].map(d)
+#
+# dt = dt.sort_values(by='total_bill', ascending=False)
+# print(dt.head())
 
-d = {'Yes': 1, 'No': 0}
-dt['smoker'].map(d)
+# print(dt.pivot_table(['total_bill', 'tip', 'size'], ['sex'], aggfunc=np.mean))
 
-dt = dt.sort_values(by='total_bill', ascending=False)
-print(dt.head())
+# columns_to_show = ['total_bill', 'tip']
+# print(dt.groupby(['size'])[columns_to_show].agg([np.mean, np.std, np.min, np.max]))
 

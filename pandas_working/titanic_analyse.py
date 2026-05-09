@@ -5,7 +5,7 @@ pd.set_option("display.max_columns", 100)
 pd.set_option("display.max_rows", 100)
 pd.set_option('display.width', 200)
 
-df = pd.read_csv("titanic.csv")
+df = pd.read_csv("../data/titanic.csv")
 print(df.head())
 
 ### Всего 891 пассажир, выжило - 0.383838, большинсвто пассажиров - 2 класс (средний);
